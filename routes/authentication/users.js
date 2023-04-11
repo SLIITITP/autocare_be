@@ -17,7 +17,9 @@ router.get("/api/user/authenticate", function (req, res, next) {
     let password = req.query.password;
 
     dbConnection.query(
-      `select * from SystemUsers where UserName = '${userName}' and Password = '${password}'`,
+      `select C.* from SystemUsers S
+      inner join Customer C on S.CustomerID = C.AutoID
+      where S.UserName = '${userName}' and S.Password = '${password}'`,
       (_error, result, fields) => {
         if (_error) throw _error;
 
