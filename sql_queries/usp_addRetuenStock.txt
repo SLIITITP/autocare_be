@@ -1,0 +1,16 @@
+CREATE DEFINER=`admin`@`%` PROCEDURE `USP_AddReturnStock`(
+	IN ReturnDetails json
+)
+BEGIN
+	INSERT INTO `StockReturnDetails`
+		(`PorductCategory`,`ProductSubCategory`,`Product`,`Quantity`,`ReturningReason`,`ReturnDate`)
+    VALUES	(
+   
+    JSON_UNQUOTE(JSON_EXTRACT(ReturnDetails,'$.ProductCategory')),
+    JSON_UNQUOTE(JSON_EXTRACT(ReturnDetails,'$.ProductSubCategory')),
+    JSON_UNQUOTE(JSON_EXTRACT(ReturnDetails,'$.Product')),
+    JSON_UNQUOTE(JSON_EXTRACT(ReturnDetails,'$.Quantity')),
+    JSON_UNQUOTE(JSON_EXTRACT(ReturnDetails,'$.ReturningReason')),
+    JSON_UNQUOTE(JSON_EXTRACT(ReturnDetails,'$.ReturnDate'))
+    );
+END
