@@ -1,0 +1,18 @@
+CREATE DEFINER=`admin`@`%` PROCEDURE `USP_AddEmpLeave`(
+	IN LeaveInfo JSON
+    )
+BEGIN
+	INSERT INTO `EmployeeLeaveInfo`
+		(`EmployeeID`,`FirstName`,`LastName`,`empDepartment`,`leaveCategory`,`leaveType`,`leaveFrom`,`leaveTo`,`dayCount`)
+    VALUES     (
+		JSON_UNQUOTE(JSON_EXTRACT(LeaveInfo, '$.EmployeeID')),
+        JSON_UNQUOTE(JSON_EXTRACT(LeaveInfo, '$.FirstName')),
+        JSON_UNQUOTE(JSON_EXTRACT(LeaveInfo, '$.LastName')),
+        JSON_UNQUOTE(JSON_EXTRACT(LeaveInfo, '$.empDepartment')),
+        JSON_UNQUOTE(JSON_EXTRACT(LeaveInfo, '$.leaveCategory')),
+        JSON_UNQUOTE(JSON_EXTRACT(LeaveInfo, '$.leaveType')),
+        JSON_UNQUOTE(JSON_EXTRACT(LeaveInfo, '$.leaveFrom')),
+        JSON_UNQUOTE(JSON_EXTRACT(LeaveInfo, '$.leaveTo')),
+        JSON_UNQUOTE(JSON_EXTRACT(LeaveInfo, '$.dayCount'))
+        );
+END
