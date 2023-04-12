@@ -13,6 +13,7 @@ let productCategoryRouter = require("./routes/masters/product-category");
 
 //payroll_hr
 let employeeMaster = require("./routes/payroll_hr/employeeMaster");
+let employeeLeaveRequest = require("./routes/payroll_hr/employeeLeave");
 
 var app = express();
 
@@ -37,6 +38,7 @@ app.use("/", productCategoryRouter);
 
 //payroll_hr
 app.use("/", employeeMaster);
+app.use("/", employeeLeaveRequest);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
