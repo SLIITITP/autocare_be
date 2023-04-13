@@ -3,7 +3,7 @@ let router = express.Router();
 let dbConnection = require("./../../util/db-helper/db_connection");
 
 /*Add leave form data*/
-router.post("/api/payroll_hr/leave-request-form", (req, res, next) => {
+router.post("/api/employee/leave-request-form", (req, res, next) => {
     try{
         let LeaveInfo = req.body.LeaveInfo;
 
