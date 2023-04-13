@@ -8,6 +8,9 @@ const cors = require("cors");
 var indexRouter = require("./routes/index");
 var authUserRouter = require("./routes/authentication/users");
 
+//courier 
+let DeliveryReq = require("./routes/courier/DeliveryReq");
+
 //masters
 let productCategoryRouter = require("./routes/masters/product-category");
 
@@ -37,6 +40,10 @@ app.use("/", indexRouter);
 
 //authentication
 app.use("/", authUserRouter);
+
+
+//courier
+app.use("/",DeliveryReq);
 
 //masters
 app.use("/", productCategoryRouter);
