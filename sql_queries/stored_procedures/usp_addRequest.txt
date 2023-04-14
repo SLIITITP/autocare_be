@@ -1,0 +1,17 @@
+CREATE DEFINER=`admin`@`%` PROCEDURE `USP_AddRequest`(
+			IN RequestDetails json
+)
+BEGIN
+	INSERT INTO `StockReturnDetails`
+		(`DeliveryID`,`OrderID`,`Name`,`Phone`,`Address`,`City`,`Province`)
+    VALUES	(
+   
+    JSON_UNQUOTE(JSON_EXTRACT(ReturnDetails,'$.DeliveryID')),
+    JSON_UNQUOTE(JSON_EXTRACT(ReturnDetails,'$.OrderID')),
+    JSON_UNQUOTE(JSON_EXTRACT(ReturnDetails,'$.Name')),
+    JSON_UNQUOTE(JSON_EXTRACT(ReturnDetails,'$.Phone')),
+    JSON_UNQUOTE(JSON_EXTRACT(ReturnDetails,'$.Address')),
+    JSON_UNQUOTE(JSON_EXTRACT(ReturnDetails,'$.City')),
+     JSON_UNQUOTE(JSON_EXTRACT(ReturnDetails,'$.Province'))
+    );
+END

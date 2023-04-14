@@ -2,16 +2,16 @@ let express = require("express");
 let router = express.Router();
 let dbConnection = require("./../../util/db-helper/db_connection");
 
-/*Add an employee*/
-router.post("/api/employee/add-employee", (req, res, next) => {
+/*Add an courier*/
+router.post("/api/courier/add-courier", (req, res, next) => {
   try {
-    let BasicInfo = req.body.BasicInfo;
-    let JobInfo   = req.body.JobInfo;
+    let CourierData = req.body.CourierData;
     
-    let sqlQuery  = `call USP_AddEmployee(?,?)`;
+
+    let sqlQuery = `call USP_AddCourier(?)`;
     dbConnection.query(
       sqlQuery,
-      [BasicInfo, JobInfo],
+      [CourierData],
       (_error, result, fields) => {
         if (_error) throw _error;
 

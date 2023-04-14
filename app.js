@@ -8,13 +8,18 @@ const cors = require("cors");
 var indexRouter = require("./routes/index");
 var authUserRouter = require("./routes/authentication/users");
 
+//courier 
+
+let DeliveryReq = require("./routes/courier/DeliveryReq");
+
 //masters
 let productCategoryRouter = require("./routes/masters/product-category");
 
 //payroll_hr
 let employeeMaster = require("./routes/payroll_hr/employeeMaster");
 let employeeLeaveRequest = require("./routes/payroll_hr/employeeLeave");
-
+let employeeAttendance = require("./routes/payroll_hr/employeeAttendance");
+                                    
 //stock_management
 let StockReturnForm = require("./routes/stock_management/StockReturnForm");
 let StockReceiveForm = require("./routes/stock_management/StockReceiveForm");
@@ -40,12 +45,19 @@ app.use("/", indexRouter);
 //authentication
 app.use("/", authUserRouter);
 
+
+//courier
+app.use("/",DeliveryRequestForm);
+
+app.use("/",DeliveryReq)
+
 //masters
 app.use("/", productCategoryRouter);
 
 //payroll_hr
 app.use("/", employeeMaster);
 app.use("/", employeeLeaveRequest);
+app.use("/" , employeeAttendance);
 
 //stock_management
 app.use("/", StockReturnForm);
