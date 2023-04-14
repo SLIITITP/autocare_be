@@ -9,6 +9,7 @@ var indexRouter = require("./routes/index");
 var authUserRouter = require("./routes/authentication/users");
 
 //courier 
+
 let DeliveryReq = require("./routes/courier/DeliveryReq");
 
 //masters
@@ -42,7 +43,9 @@ app.use("/", authUserRouter);
 
 
 //courier
-app.use("/",DeliveryReq);
+app.use("/",DeliveryRequestForm);
+
+app.use("/",DeliveryReq)
 
 //masters
 app.use("/", productCategoryRouter);
