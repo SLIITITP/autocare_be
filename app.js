@@ -10,7 +10,7 @@ var authUserRouter = require("./routes/authentication/users");
 
 //courier 
 
-let DeliveryReq = require("./routes/courier/DeliveryReq");
+let DeliveryRequestForm = require("./routes/courier/DeliveryRequestForm");
 
 //masters
 let productCategoryRouter = require("./routes/masters/product-category");
@@ -46,7 +46,7 @@ app.use("/", authUserRouter);
 //courier
 app.use("/",DeliveryRequestForm);
 
-app.use("/",DeliveryReq)
+
 
 //masters
 app.use("/", productCategoryRouter);

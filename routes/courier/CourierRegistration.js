@@ -3,14 +3,14 @@ let router = express.Router();
 let dbConnection = require("../../util/db-helper/db_connection");
 
 /*Add a request*/
-router.post("/api/Request/add-Request",(req,res,next) =>{
+router.post("/api/register/add-register",(req,res,next) =>{
     try{
-        let RequestDetails = req.body.RequestDetails;
+        let RegDetails = req.body.RegDetails;
 
-        let sqlQuery = `call USP_AddRequest(?)`;
+        let sqlQuery = `call USP_Addcourier(?)`;
         dbConnection.query(
             sqlQuery,
-            [RequestDetails],
+            [RegDetails],
             (_error,result,fields)=>{
                 if(_error) throw _error;
 
