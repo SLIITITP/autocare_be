@@ -2,7 +2,7 @@ let express = require("express");
 let router = express.Router();
 let dbConnection = require("./../../util/db-helper/db_connection");
 
-/*Add an return stock details*/
+/*Add an request details*/
 router.post("/api/returnStock/add-returnStock",(req,res,next) =>{
     try{
         let ReturnDetails = req.body.ReturnDetails;
