@@ -9,7 +9,9 @@ var indexRouter = require("./routes/index");
 var authUserRouter = require("./routes/authentication/users");
 
 //courier 
-let DeliveryReq = require("./routes/courier/DeliveryReq");
+
+let DeliveryRequestForm = require("./routes/courier/DeliveryRequestForm");
+let CourierRegistration = require("./routes/courier/CourierRegistration ");
 
 //masters
 let productCategoryRouter = require("./routes/masters/product-category");
@@ -21,6 +23,9 @@ let employeeAttendance = require("./routes/payroll_hr/employeeAttendance");
                                     
 //stock_management
 let StockReturnForm = require("./routes/stock_management/StockReturnForm");
+let StockReceiveForm = require("./routes/stock_management/StockReceiveForm");
+let InventoryLogin = require("./routes/stock_management/InventoryLogin");
+let purchaseOrderForm = require("./routes/stock_management/purchaseOrderForm");
 
 
 var app = express();
@@ -43,7 +48,9 @@ app.use("/", authUserRouter);
 
 
 //courier
-app.use("/",DeliveryReq);
+app.use("/",DeliveryRequestForm);
+app.use("/",CourierRegistration);
+
 
 //masters
 app.use("/", productCategoryRouter);
@@ -55,6 +62,10 @@ app.use("/" , employeeAttendance);
 
 //stock_management
 app.use("/", StockReturnForm);
+app.use("/", StockReceiveForm);
+app.use("/", InventoryLogin);
+app.use("/", purchaseOrderForm);
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

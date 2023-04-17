@@ -1,16 +1,16 @@
 let express = require("express");
 let router = express.Router();
-let dbConnection = require("./../../util/db-helper/db_connection");
+let dbConnection = require("../../util/db-helper/db_connection");
 
-/*Add an request details*/
-router.post("/api/returnStock/add-returnStock",(req,res,next) =>{
+/*Add a request*/
+router.post("/api/request/add-request",(req,res,next) =>{
     try{
-        let ReturnDetails = req.body.ReturnDetails;
+        let RequestDetails = req.body.RequestDetails;
 
-        let sqlQuery = `call USP_AddReturnStock(?)`;
+        let sqlQuery = `call USP_AddRequest(?)`;
         dbConnection.query(
             sqlQuery,
-            [ReturnDetails],
+            [RequestDetails],
             (_error,result,fields)=>{
                 if(_error) throw _error;
 

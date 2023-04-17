@@ -2,15 +2,15 @@ let express = require("express");
 let router = express.Router();
 let dbConnection = require("./../../util/db-helper/db_connection");
 
-/*Add an request details*/
-router.post("/api/returnStock/add-returnStock",(req,res,next) =>{
+/*Add an vehicle details*/
+router.post("/api/vehiclereg/add-vehiclereg",(req,res,next) =>{
     try{
-        let ReturnDetails = req.body.ReturnDetails;
+        let VehicleDetails = req.body.VehicleDetails;
 
-        let sqlQuery = `call USP_AddReturnStock(?)`;
+        let sqlQuery = `call USP_AddVehicle(?)`;
         dbConnection.query(
             sqlQuery,
-            [ReturnDetails],
+            [VehicleDetails],
             (_error,result,fields)=>{
                 if(_error) throw _error;
 

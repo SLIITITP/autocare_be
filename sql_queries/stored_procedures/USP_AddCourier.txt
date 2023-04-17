@@ -1,0 +1,18 @@
+CREATE DEFINER=`admin`@`%` PROCEDURE `USP_AddCourier`(
+    IN CourierDetails json
+    )
+BEGIN
+INSERT INTO `CourierReg`
+			(`CourierID`,`CourierName`,`NIC`,`Email`,`Phone`,`Password`)
+	VALUES 	(
+				JSON_UNQUOTE(JSON_EXTRACT(CourierDetails, '$.CourierID')),
+				JSON_UNQUOTE(JSON_EXTRACT(CourierDetails, '$.CourierName')),
+				JSON_UNQUOTE(JSON_EXTRACT(CourierDetails, '$.NIC')),
+                JSON_UNQUOTE(JSON_EXTRACT(CourierDetails, '$.Email')),
+				JSON_UNQUOTE(JSON_EXTRACT(CourierDetails, '$.Phone')),
+                JSON_UNQUOTE(JSON_EXTRACT(CourierDetails, '$.Password'))
+				
+                );
+            
+	
+END

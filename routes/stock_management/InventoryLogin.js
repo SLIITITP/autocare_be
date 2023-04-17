@@ -2,16 +2,15 @@ let express = require("express");
 let router = express.Router();
 let dbConnection = require("./../../util/db-helper/db_connection");
 
-/*Add an courier*/
-router.post("/api/courier/add-courier", (req, res, next) => {
+/*Add Inventory Login Info*/
+router.post("/api/inventoryLogin/add-inventoryLogin", (req, res, next) => {
   try {
-    let CourierData = req.body.CourierData;
-    
+    let  InventoryLogDetails = req.body.InventoryLogDetails;
 
-    let sqlQuery = `call USP_AddCourier(?)`;
+    let sqlQuery = `call USP_AddInventoryLoginDetails(?)`;
     dbConnection.query(
       sqlQuery,
-      [CourierData],
+      [InventoryLogDetails],
       (_error, result, fields) => {
         if (_error) throw _error;
 
