@@ -3,7 +3,7 @@ let router = express.Router();
 let dbConnection = require("../../util/db-helper/db_connection");
 
 /*Add a request*/
-router.post("/api/courier/add-request",(req,res,next) =>{
+router.post("/api/courier/add-Request",(req,res,next) =>{
     try{
         let RequestDetails = req.body.RequestDetails;
 
