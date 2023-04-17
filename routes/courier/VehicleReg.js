@@ -2,23 +2,23 @@ let express = require("express");
 let router = express.Router();
 let dbConnection = require("./../../util/db-helper/db_connection");
 
-/*Add leave form data*/
-router.post("/api/employee/leave-request-form", (req, res, next) => {
+/*Add an vehicle details*/
+router.post("/api/vehiclereg/add-vehiclereg",(req,res,next) =>{
     try{
-        let LeaveInfo = req.body.LeaveInfo;
+        let VehicleDetails = req.body.VehicleDetails;
 
-        let sqlQuery = `call USP_AddEmpLeave(?)`;
+        let sqlQuery = `call USP_AddVehicle(?)`;
         dbConnection.query(
             sqlQuery,
-            [LeaveInfo],
-            (_error, result, fields) => {
-                if (_error) throw _error;
+            [VehicleDetails],
+            (_error,result,fields)=>{
+                if(_error) throw _error;
 
                 console.log(result);
                 res.json(result);
             }
         );
-    }catch (error) {
+    }catch(error){
         console.error(error);
     }
 });

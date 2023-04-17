@@ -1,0 +1,15 @@
+CREATE DEFINER=`admin`@`%` PROCEDURE `USP_AddVehicle`(
+	IN VehicleInfo JSON
+    )
+BEGIN
+	INSERT INTO `VehicleReg`
+		(`VehicleID`,`VehicleType`,`Brand`,`Model`,`VehicleNo`)
+    VALUES     (
+		JSON_UNQUOTE(JSON_EXTRACT(LeaveInfo, '$.VehicleID')),
+        JSON_UNQUOTE(JSON_EXTRACT(LeaveInfo, '$.VehicleType')),
+        JSON_UNQUOTE(JSON_EXTRACT(LeaveInfo, '$.Brand')),
+        JSON_UNQUOTE(JSON_EXTRACT(LeaveInfo, '$.Model')),
+        JSON_UNQUOTE(JSON_EXTRACT(LeaveInfo, '$.VehicleNo'))
+      
+        );
+END
