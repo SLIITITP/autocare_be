@@ -7,7 +7,7 @@ router.post("/api/register/add-register",(req,res,next) =>{
     try{
         let RegDetails = req.body.RegDetails;
 
-        let sqlQuery = `call USP_Addcourier(?)`;
+        let sqlQuery = `call USP_AddCourier(?)`;
         dbConnection.query(
             sqlQuery,
             [RegDetails],
