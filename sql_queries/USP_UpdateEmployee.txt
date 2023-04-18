@@ -1,0 +1,44 @@
+CREATE PROCEDURE `USP_UpdateEmployee`(
+	IN EmpID int,
+    IN BasicInfo json,
+    IN JobInfo json,   
+    IN LeaveInfo json,
+	IN PayrollInfo json
+)
+BEGIN
+	/*update Basic Info*/
+	UPDATE `EmployeeBasicInfo`
+	SET
+			`EPFNo` 	= JSON_UNQUOTE(JSON_EXTRACT(BasicInfo, '$.EPFNo')),
+			`FName` 	= JSON_UNQUOTE(JSON_EXTRACT(BasicInfo, '$.FName')),
+			`LName` 	= JSON_UNQUOTE(JSON_EXTRACT(BasicInfo, '$.LName')),
+			`DateOfBirth` = JSON_UNQUOTE(JSON_EXTRACT(BasicInfo, '$.DateOfBirth')),
+			`MobileNo` 	= JSON_UNQUOTE(JSON_EXTRACT(BasicInfo, '$.MobileNo')),
+			`Email` 	= JSON_UNQUOTE(JSON_EXTRACT(BasicInfo, '$.Email'))
+	WHERE 	`AutoID` 	= EmpID;
+
+	/*update Job Info*/
+    UPDATE `EmployeeJobInfo`
+	SET
+			`JoinedDate` 	= JSON_UNQUOTE(JSON_EXTRACT(JobInfo, '$.JoinedDate')),
+			`ResignedDate` 	= JSON_UNQUOTE(JSON_EXTRACT(JobInfo, '$.ResignedDate'))
+	WHERE 	`EmployeeID` 	= EmpID;
+    
+    /*update Payroll Info*/
+    UPDATE `EmployeePayrollInfo`
+	SET
+			`BasicSalary` 	= JSON_UNQUOTE(JSON_EXTRACT(PayrollInfo, '$.BasicSalary')),
+			`OTRate` 		= JSON_UNQUOTE(JSON_EXTRACT(PayrollInfo, '$.OTRate')),
+			`FuelAllowance` = JSON_UNQUOTE(JSON_EXTRACT(PayrollInfo, '$.FuelAllowance')),
+			`LCAllowance` 	= JSON_UNQUOTE(JSON_EXTRACT(PayrollInfo, '$.LCAllowance'))
+	WHERE `EmployeeID` 		= EmpID;
+
+    
+   /*update leave info*/    
+   UPDATE `EmployeeLeaveInfo`
+	SET
+			`AnnualCount` 	= JSON_UNQUOTE(JSON_EXTRACT(LeaveInfo, '$.AnnualCount')),
+			`CasualCount` 	= JSON_UNQUOTE(JSON_EXTRACT(LeaveInfo, '$.CasualCount'))
+	WHERE 	`EmployeeID` 	= EmpID;
+
+END
