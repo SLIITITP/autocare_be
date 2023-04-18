@@ -1,4 +1,0 @@
-CREATE DEFINER=`admin`@`%` PROCEDURE `USP_DisplayAppointment`()
-BEGIN
-	SELECT * FROM `SchedulingAppointment`;
-END
