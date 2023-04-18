@@ -6,13 +6,28 @@ let dbConnection = require("./../../util/db-helper/db_connection");
 router.post("/api/employee/mark-attendance", (req, res, next) => {
   try {
     let EmpAttendance = req.body.EmpAttendance;
-   
+
     let sqlQuery = `call USP_MarkAttendance(?)`;
+    dbConnection.query(sqlQuery, [EmpAttendance], (_error, result, fields) => {
+      if (_error) throw _error;
+
+      console.log(result);
+      res.json(result);
+    });
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+//list attendance
+router.get("/api/employee/list-attendance", (req, res, next) => {
+  try {
     dbConnection.query(
-      sqlQuery,
-      [EmpAttendance],
+      `SELECT    AutoID, EmployeeID,    DATE_FORMAT(Date, '%m/%d/%Y') AS Date,    TimeIn,    TimeOut,
+        TIMEDIFF(TimeOut, TimeIn) AS 'WorkingHours'
+    FROM    EmployeeAttendance`,
       (_error, result, fields) => {
-        if (_error) throw _error;
+        if (_error) console.error(_error);
 
         console.log(result);
         res.json(result);
@@ -22,6 +37,5 @@ router.post("/api/employee/mark-attendance", (req, res, next) => {
     console.error(error);
   }
 });
-
 
 module.exports = router;
