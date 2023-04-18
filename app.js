@@ -26,6 +26,9 @@ let StockReceiveForm = require("./routes/stock_management/StockReceiveForm");
 let InventoryLogin = require("./routes/stock_management/InventoryLogin");
 let purchaseOrderForm = require("./routes/stock_management/purchaseOrderForm");
 
+//appointment_scheduling
+let schedulingAppointment = require("./routes/scheduling/Scheduling_appointment");
+
 
 var app = express();
 
@@ -64,6 +67,9 @@ app.use("/", StockReturnForm);
 app.use("/", StockReceiveForm);
 app.use("/", InventoryLogin);
 app.use("/", purchaseOrderForm);
+
+//scheduling_appointment
+app.use("/",schedulingAppointment);
 
 
 // catch 404 and forward to error handler
