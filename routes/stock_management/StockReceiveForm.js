@@ -6,9 +6,9 @@ let dbConnection = require("./../../util/db-helper/db_connection");
 router.post("/api/receiveStock/add-receiveStock", (req, res, next) => {
   try {
     let  ReceiveDetails = req.body. ReceiveDetails;
-   
-
+    
     let sqlQuery = `call USP_AddReceiveStock(?)`;
+
     dbConnection.query(
       sqlQuery,
       [ ReceiveDetails],
