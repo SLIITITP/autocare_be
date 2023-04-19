@@ -1,18 +1,26 @@
-var express = require('express');
-var router = express.Router();
-let mysql = require('mysql')
-let dbConnection = require('./../../util/db-helper/db_connection');
+let express = require("express");
+let router = express.Router();
+let dbConnection = require("./../../util/db-helper/db_connection");
 
-//get all
-router.get('/api/customer/upade-appointment', async (req, res, next) => {
-    dbConnection.query("SELECT * FROM SchedulingAppointment",
+//update return stock
+router.put("/api/employee/update-Appointment", (req, res, next) => {
+    try {
+      let EmpID = req.body.ID;
+        
+      let sqlQuery = `call USP_UpdateAppointment(?,?,?,?,?)`;
+      dbConnection.query(
+        sqlQuery,
+        [EmpID],
         (_error, result, fields) => {
-            if (_error)
-                throw _error;
-
-            console.log(result);
-            res.json(result);
-        });
-});
+          if (_error) console.error(_error);
+  
+          console.log(result);
+          res.json(result);
+        }
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  });
 
 module.exports = router;
