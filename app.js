@@ -30,6 +30,8 @@ let purchaseOrderForm = require("./routes/stock_management/purchaseOrderForm");
 //appointment_scheduling
 let schedulingAppointment = require("./routes/scheduling/Scheduling_appointment");
 let confirmAppointment = require("./routes/scheduling/Confirm_appointment");
+let ServiceManagerLogin = require("./routes/scheduling/Login");
+
 
 var app = express();
 
@@ -70,6 +72,7 @@ app.use("/", purchaseOrderForm);
 //scheduling_appointment
 app.use("/",schedulingAppointment);
 app.use("/",confirmAppointment);
+app.use("/",ServiceManagerLogin);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
