@@ -5,10 +5,10 @@ let dbConnection = require('../../util/db-helper/db_connection')
 /*Add a request*/
 router.post('/api/register/add-register', (req, res, next) => {
   try {
-    let RegDetails = req.body.RegDetails
+    let CourierDetails = req.body.CourierDetails;
 
     let sqlQuery = `call USP_AddCourier(?)`
-    dbConnection.query(sqlQuery, [RegDetails], (_error, result, fields) => {
+    dbConnection.query(sqlQuery, [CourierDetails], (_error, result, fields) => {
       if (_error) throw _error
 
       console.log(result)
@@ -19,4 +19,4 @@ router.post('/api/register/add-register', (req, res, next) => {
   }
 })
 
-module.exports = router
+module.exports = router;
