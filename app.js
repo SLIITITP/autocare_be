@@ -27,6 +27,12 @@ let StockReceiveForm = require("./routes/stock_management/StockReceiveForm");
 let InventoryLogin = require("./routes/stock_management/InventoryLogin");
 let purchaseOrderForm = require("./routes/stock_management/purchaseOrderForm");
 
+//order
+let orderForm = require("./routes/order/orders");
+let cartItems = require("./routes/order/cart");
+let returnProd = require("./routes/order/return");
+
+
 var app = express();
 
 // view engine setup
@@ -62,6 +68,12 @@ app.use("/", StockReturnForm);
 app.use("/", StockReceiveForm);
 app.use("/", InventoryLogin);
 app.use("/", purchaseOrderForm);
+
+//order
+app.use("/", orderForm);
+app.use("/", cartItems);
+app.use("/", returnProd);
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
