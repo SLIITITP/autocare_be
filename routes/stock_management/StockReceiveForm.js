@@ -24,6 +24,29 @@ router.post("/api/receiveStock/add-receiveStock", (req, res, next) => {
   }
 });
 
+//update receive stock
+router.put("/api/receiveStock/update-receiveStock", (req, res, next) => {
+  try {
+    let GoodReceiveID = req.body.GoodReceiveID ;
+    let ReceiveDetails = req.body.ReceiveDetails;
+   
+    let sqlQuery = `call USP_UpdateReceiveStock(?,?)`;
+    dbConnection.query(
+      sqlQuery,
+      [GoodReceiveID , ReceiveDetails],
+      (_error, result, fields) => {
+        if (_error) console.error(_error);
+
+        console.log(result);
+        res.json(result);
+      }
+    );
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+
 //list received stock
 router.get("/api/receiveStock/list-receiveStock", (req, res, next) => {
   try {
