@@ -6,7 +6,7 @@ BEGIN
 		(`DeliveryID`,`OrderID`,`Name`,`Phone`,`Address`,`City`,`Province`)
     VALUES	(
    
-    JSON_UNQUOTE(JSON_EXTRACT(RequestDetails,'$.DeliveryID')),
+     JSON_UNQUOTE(JSON_EXTRACT(RequestDetails,'$.DeliveryID')),
     JSON_UNQUOTE(JSON_EXTRACT(RequestDetails,'$.OrderID')),
     JSON_UNQUOTE(JSON_EXTRACT(RequestDetails,'$.Name')),
     JSON_UNQUOTE(JSON_EXTRACT(RequestDetails,'$.Phone')),

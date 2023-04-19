@@ -1,0 +1,11 @@
+CREATE DEFINER=`admin`@`%` PROCEDURE `USP_AddServiceManagerLogin`(
+	IN loginInfo JSON
+    )
+BEGIN
+	INSERT INTO `ServiceManagerLoginInfo`
+		(`username`,`password`)
+    VALUES     (
+		JSON_UNQUOTE(JSON_EXTRACT(loginInfo, '$.username')),
+        JSON_UNQUOTE(JSON_EXTRACT(loginInfo, '$.password'))
+        );
+END
