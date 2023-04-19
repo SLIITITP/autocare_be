@@ -9,8 +9,10 @@ var indexRouter = require("./routes/index");
 var authUserRouter = require("./routes/authentication/users");
 
 //courier
-let DeliveryRequestForm = require("./routes/courier/DeliveryRequestForm");
+let deliveryRequest = require("./routes/courier/deliveryRequest");
 let CourierRegistration = require("./routes/courier/CourierRegistration");
+let VehicleReg = require("./routes/courier/VehicleReg");
+
 
 
 //masters
@@ -52,8 +54,9 @@ app.use("/", indexRouter);
 app.use("/", authUserRouter);
 
 //courier
-app.use("/", DeliveryRequestForm);
+app.use("/", deliveryRequest);
 app.use("/", CourierRegistration);
+app.use("/", VehicleReg);
 
 //masters
 app.use("/", productCategoryRouter);
