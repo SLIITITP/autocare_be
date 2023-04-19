@@ -1,0 +1,18 @@
+CREATE DEFINER=`admin`@`%` PROCEDURE `USP_AddAppointment`(
+	IN AppointmentInfo JSON
+    )
+BEGIN
+	INSERT INTO `SchedulingAppointment`
+		(`fname`,`lname`,`phone`,`email`,`vnumber`,`vtype`,`package`,`oil`,`aname`)
+    VALUES     (
+		JSON_UNQUOTE(JSON_EXTRACT(AppointmentInfo, '$.fname')),
+        JSON_UNQUOTE(JSON_EXTRACT(AppointmentInfo, '$.lname')),
+        JSON_UNQUOTE(JSON_EXTRACT(AppointmentInfo, '$.phone')),
+        JSON_UNQUOTE(JSON_EXTRACT(AppointmentInfo, '$.email')),
+        JSON_UNQUOTE(JSON_EXTRACT(AppointmentInfo, '$.vnumber')),
+        JSON_UNQUOTE(JSON_EXTRACT(AppointmentInfo, '$.vtype')),
+		JSON_UNQUOTE(JSON_EXTRACT(AppointmentInfo, '$.leaveCategory')),
+		JSON_UNQUOTE(JSON_EXTRACT(AppointmentInfo, '$.leaveType')),
+		JSON_UNQUOTE(JSON_EXTRACT(AppointmentInfo, '$.aname'))
+        );
+END

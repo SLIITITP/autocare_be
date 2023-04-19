@@ -9,8 +9,10 @@ var indexRouter = require("./routes/index");
 var authUserRouter = require("./routes/authentication/users");
 
 //courier
-let DeliveryRequestForm = require("./routes/courier/DeliveryRequestForm");
+let deliveryRequest = require("./routes/courier/deliveryRequest");
 let CourierRegistration = require("./routes/courier/CourierRegistration");
+let VehicleReg = require("./routes/courier/VehicleReg");
+
 
 
 //masters
@@ -26,6 +28,12 @@ let StockReturnForm = require("./routes/stock_management/StockReturnForm");
 let StockReceiveForm = require("./routes/stock_management/StockReceiveForm");
 let InventoryLogin = require("./routes/stock_management/InventoryLogin");
 let purchaseOrderForm = require("./routes/stock_management/purchaseOrderForm");
+
+//appointment_scheduling
+let schedulingAppointment = require("./routes/scheduling/Scheduling_appointment");
+let confirmAppointment = require("./routes/scheduling/Confirm_appointment");
+let ServiceManagerLogin = require("./routes/scheduling/Login");
+let VehicleServiceAppointment = require("./routes/scheduling/Service");
 
 var app = express();
 
@@ -46,8 +54,9 @@ app.use("/", indexRouter);
 app.use("/", authUserRouter);
 
 //courier
-app.use("/", DeliveryRequestForm);
+app.use("/", deliveryRequest);
 app.use("/", CourierRegistration);
+app.use("/", VehicleReg);
 
 //masters
 app.use("/", productCategoryRouter);
@@ -62,6 +71,12 @@ app.use("/", StockReturnForm);
 app.use("/", StockReceiveForm);
 app.use("/", InventoryLogin);
 app.use("/", purchaseOrderForm);
+
+//scheduling_appointment
+app.use("/",schedulingAppointment);
+app.use("/",confirmAppointment);
+app.use("/",ServiceManagerLogin);
+app.use("/",VehicleServiceAppointment);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
