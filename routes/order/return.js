@@ -5,7 +5,7 @@ let dbConnection = require("./../../util/db-helper/db_connection");
 //Add return product
 router.post("/api/order/add-return-prod", (req, res, next) => {
   try {
-    let ReturnProdDetails = req.body.BasicInfo;
+    let ReturnProdDetails = req.body.ReturnProdDetails;
 
     let sqlQuery = `call USP_AddReturnProd(?)`;
     dbConnection.query(
@@ -26,13 +26,13 @@ router.post("/api/order/add-return-prod", (req, res, next) => {
 //update return product
 router.put("/api/order/update-return-prod", (req, res, next) => {
   try {
-    let ReturnID = req.body.ReturnProdID;
+    let ReturnProdID = req.body.ReturnProdID;
     let ReturnProdDetails = req.body.ReturnProdDetails;
 
-    let sqlQuery = `call USP_UpdateCart(?)`;
+    let sqlQuery = `call USP_UpdateReturnProd(?,?)`;
     dbConnection.query(
       sqlQuery,
-      [ReturnID, ReturnProdDetails],
+      [ReturnProdID, ReturnProdDetails],
       (_error, result, fields) => {
         if (_error) console.error(_error);
 
