@@ -29,6 +29,12 @@ let StockReceiveForm = require("./routes/stock_management/StockReceiveForm");
 let InventoryLogin = require("./routes/stock_management/InventoryLogin");
 let purchaseOrderForm = require("./routes/stock_management/purchaseOrderForm");
 
+//order
+let orderForm = require("./routes/order/orders");
+let cartItems = require("./routes/order/cart");
+let returnProd = require("./routes/order/return");
+
+
 //appointment_scheduling
 let schedulingAppointment = require("./routes/scheduling/Scheduling_appointment");
 let confirmAppointment = require("./routes/scheduling/Confirm_appointment");
@@ -76,6 +82,12 @@ app.use("/", StockReturnForm);
 app.use("/", StockReceiveForm);
 app.use("/", InventoryLogin);
 app.use("/", purchaseOrderForm);
+
+//order
+app.use("/", orderForm);
+app.use("/", cartItems);
+app.use("/", returnProd);
+
 
 //scheduling_appointment
 app.use("/",schedulingAppointment);

@@ -24,6 +24,28 @@ router.post("/api/stockOrder/add-stockOrder", (req, res, next) => {
   }
 });
 
+//update an employee
+router.put("/api/stockOrder/update-stockOrder", (req, res, next) => {
+  try {
+    let OrderID = req.body.OrderID;
+    let  PurchaseOrderInfo = req.body. PurchaseOrderInfo;
+  
+    let sqlQuery = `call USP_UpdateStockOrders(?,?)`;
+    dbConnection.query(
+      sqlQuery,
+      [OrderID, PurchaseOrderInfo],
+      (_error, result, fields) => {
+        if (_error) console.error(_error);
+
+        console.log(result);
+        res.json(result);
+      }
+    );
+  } catch (error) {
+    console.error(error);
+  }
+});
+
 //list purchase order stock
 router.get("/api/stockOrder/list-stockOrder", (req, res, next) => {
   try {
