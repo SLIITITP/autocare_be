@@ -35,6 +35,11 @@ let confirmAppointment = require("./routes/scheduling/Confirm_appointment");
 let ServiceManagerLogin = require("./routes/scheduling/Login");
 let VehicleServiceAppointment = require("./routes/scheduling/Service");
 
+//ticket
+let RaiseTicket = require("./routes/customer_care/raiseTicket");
+let TrackTicket = require("./routes/customer_care/trackTicket");
+let MyTicket = require("./routes/customer_care/myTicket");
+
 var app = express();
 
 // view engine setup
@@ -77,6 +82,11 @@ app.use("/",schedulingAppointment);
 app.use("/",confirmAppointment);
 app.use("/",ServiceManagerLogin);
 app.use("/",VehicleServiceAppointment);
+
+// customer_care
+app.use("/",RaiseTicket);
+app.use("/",TrackTicket);
+app.use("/",MyTicket);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
