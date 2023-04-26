@@ -52,10 +52,11 @@ router.put("/api/order/update-cart", (req, res, next) => {
 });
 
 //list cart
+
 router.get("/api/order/list-cart", (req, res, next) => {
   try {
     dbConnection.query(
-      "SELECT * FROM EmployeeBasicInfo",
+      "SELECT * FROM Cart",
       (_error, result, fields) => {
         if (_error) console.error(_error);
 
@@ -68,13 +69,14 @@ router.get("/api/order/list-cart", (req, res, next) => {
   }
 });
 
+
 //get cart by id
 router.get("/api/order/get-cart", (req, res, next) => {
   try {
     console.log(req.query);
     let id = req.query.EmpID;
     dbConnection.query(
-      `call USP_GetEmployeeInfo(${id})`,
+      `select ProdID, ProdName, Price, ProdCatID  from Product  limit 1;`,
       (_error, result, fields) => {
         if (_error) console.error(_error);
 
