@@ -1,7 +1,8 @@
 let express = require("express");
 let router = express.Router();
 let dbConnection = require("./../../util/db-helper/db_connection");
-const nodemailer = require("nodemailer");  //new
+let SendEmail = require("./../../util/notifications/email_util");
+const nodemailer = require("nodemailer"); //new
 
 /*Add leave form data*/
 router.post("/api/employee/leave-request-form", (req, res, next) => {
@@ -35,72 +36,18 @@ router.get("/api/employee/leave-approval", (req, res, next) => {
   }
 });
 
-//update leave-request
-/*router.put("/api/employee/leave-request-approval", (req, res, next) => {
-  try {
-    let _employeeID = req.body.EmployeeID;
-    let _statusValue = req.body.Status;
-    let _daycountVal = req.body.DayCount;
-
-    let sqlQuery = `call USP_UpdateLeaveRequest(?,?,?)`;
-    dbConnection.query(
-      sqlQuery,
-      [_employeeID, _statusValue,_daycountVal],
-      (_error, result, fields) => {
-        if (_error) console.error(_error);
-
-        console.log(result);
-        res.json(result);
-      }
-    );
-  } catch (error) {
-    console.error(error);
-  }
-///////////////////////////////NEW///////////////////////////
-try {
-  const transporter = nodemiller.createTransport({
-    service: "gmail",
-    auth:{
-      user: process.env.EMAIL ,
-      pass: process.env.PASSWORD 
-    }
-  });
-
-  const mailOptions = {
-    from : process.env.EMAIL,
-    to : dbConnection.query(
-        "SELECT Email FROM EmployeeLeaveRequest;",
-    (_error, result, fields) => {
-      if (_error) console.error(_error);
-      res.json(result);
-    }
-  ),
-    subject : "Leave Request Form",
-    html : '<h3>Your leave request is approved/rejected</h3>'
-
-  }
-
-  transporter.sendMail(mailOptions,(error,info) => {
-    if(error) {
-      console.log("Error",error)
-    }else{
-      console.log("Email sent" + info.response);
-      res.status(201).json({status:201,info})
-    }
-  })
-
-} catch (error) {
-  res.status(201).json({status:401,error})
-}
-
-});*/
-
-//new //update leave-request
+//approve or reject a leave
 router.put("/api/employee/leave-request-approval", (req, res, next) => {
   try {
     let _employeeID = req.body.EmployeeID;
     let _statusValue = req.body.Status;
     let _daycountVal = req.body.DayCount;
+    let _receiverEmail = req.body.EmployeeEmail;
+    let apporvalStatus = "";
+
+    if (_statusValue == 0) apporvalStatus = "is still pending";
+    else if (_statusValue == 1) apporvalStatus = "has been accepted";
+    else if (_statusValue == 2) apporvalStatus = "hasbeen rejected";
 
     let sqlQuery = `call USP_UpdateLeaveRequest(?,?,?)`;
     dbConnection.query(
@@ -117,39 +64,31 @@ router.put("/api/employee/leave-request-approval", (req, res, next) => {
 
         // send email notification
         try {
-          const transporter = nodemailer.createTransport({
-            service: "gmail",
-            auth: {
-              user: process.env.EMAIL,
-              pass: process.env.PASSWORD,
-            },
-          });
-
           // retrieve email from database
           let emailQuery = `SELECT Email FROM EmployeeLeaveRequest WHERE EmployeeID = ?`;
-          dbConnection.query(emailQuery, [_employeeID], (error, emailResult, fields) => {
-            if (error) {
-              console.error(error);
-              return;
-            }
-
-            console.log(emailResult);
-
-            const mailOptions = {
-              from: process.env.EMAIL,
-              to: emailResult[0].Email,
-              subject: "Leave Request Form",
-              html: "<h3>Your leave request is approved/rejected</h3>",
-            };
-
-            transporter.sendMail(mailOptions, (error, info) => {
+          dbConnection.query(
+            emailQuery,
+            [_employeeID],
+            (error, emailResult, fields) => {
               if (error) {
-                console.log("Error", error);
-              } else {
-                console.log("Email sent" + info.response);
+                console.error(error);
+                return;
               }
-            });
-          });
+
+              console.log(emailResult);
+
+              //set & pass necessary info as like line 161 and pass it to the function line 169
+              let emailObject = {
+                receiverEmail: _receiverEmail,
+                emailSubject: "Leave Approval Notice",
+                emailTextBody: "",
+                emailHtmlBody: `<h1>Leave Approval Notice</h1>
+                <p>Dear Employee, <br><br> This is to inform you that your leave ${apporvalStatus}.
+                  <br><br>Thanks & Regards,<br><b>AutoCare HR Team</b></p>`,
+              };
+              SendEmail(emailObject);
+            }
+          );
         } catch (error) {
           console.error(error);
         }
@@ -163,49 +102,4 @@ router.put("/api/employee/leave-request-approval", (req, res, next) => {
   }
 });
 
-
-//new
-//send e-mail notification
-/*router.post("/register", (req,res) => {
-  
-
-  try {
-    const transporter = nodemiller.createTransport({
-      service: "gmail",
-      auth:{
-        user: process.env.EMAIL ,
-        pass: process.env.PASSWORD 
-      }
-    });
-
-    const mailOptions = {
-      from : process.env.EMAIL,
-      to : dbConnection.query(
-          "SELECT Email FROM EmployeeLeaveRequest;",
-      (_error, result, fields) => {
-        if (_error) console.error(_error);
-        res.json(result);
-      }
-    ),
-      subject : "Leave Request Form",
-      html : '<h3>Your leave request is approved/rejected</h3>'
-
-    }
-
-    transporter.sendMail(mailOptions,(error,info) => {
-      if(error) {
-        console.log("Error",error)
-      }else{
-        console.log("Email sent" + info.response);
-        res.status(201).json({status:201,info})
-      }
-    })
-
-  } catch (error) {
-    res.status(201).json({status:401,error})
-  }
-});
-
-
-*/
 module.exports = router;
