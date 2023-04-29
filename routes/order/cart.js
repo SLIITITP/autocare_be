@@ -22,16 +22,13 @@ router.post("/api/order/add-to-cart", (req, res, next) => {
 //update cart
 router.put("/api/order/update-cart", (req, res, next) => {
   try {
-    let EmpID = req.body.EmployeeID;
-    let BasicInfo = req.body.BasicInfo;
-    let JobInfo = req.body.JobInfo;
-    let LeaveInfo = req.body.LeaveInfo;
-    let PayrollInfo = req.body.PayrollInfo;
+    let CartID = req.body.CartID;
+    let productInfo = req.body.productInfo;
 
-    let sqlQuery = `call USP_UpdateCart(?)`;
+    let sqlQuery = `call USP_UpdateCart(?,?)`;
     dbConnection.query(
       sqlQuery,
-      [EmpID, BasicInfo, JobInfo, LeaveInfo, PayrollInfo],
+      [CartID, productInfo],
       (_error, result, fields) => {
         if (_error) console.error(_error);
 
