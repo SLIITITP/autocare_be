@@ -1,6 +1,18 @@
 let express = require("express");
 let router = express.Router();
 let dbConnection = require("./../../util/db-helper/db_connection");
+let nodemailer = require('nodemailer');
+
+// configure the nodemailer transporter
+const transporter = nodemailer.createTransport({
+  host: 'smtp.gmail.com',
+  port: 3000,
+  secure: true,
+  auth: {
+    user: 'shanolisilva2001@gmail.com',
+    pass: 'nirangasilva'
+  }
+});
 
 /*Add an return stock details*/
 router.post("/api/returnStock/add-returnStock",(req,res,next) =>{
@@ -15,6 +27,22 @@ router.post("/api/returnStock/add-returnStock",(req,res,next) =>{
                 if(_error) throw _error;
 
                 console.log(result);
+
+                 // send email notification
+      let mailOptions = {
+        from: 'shanolisilva2001@gmail.com',
+        to: 'shohanisilva1996@gmail.com',
+        subject: 'New Return Stock Form Submitted',
+        text: 'A new Return Stock form has been submitted.'
+      };
+
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.error(error);
+        } else {
+          console.log('Email notification sent: ' + info.response);
+        }
+      });
                 res.json(result);
             }
         );
@@ -83,5 +111,7 @@ router.get("/api/returnStock/get-returnStock", (req, res, next) => {
     console.error(error);
   }
 });
+
+
 
 module.exports = router;

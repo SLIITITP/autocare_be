@@ -51,7 +51,7 @@ router.put("/api/receiveStock/update-receiveStock", (req, res, next) => {
 router.get("/api/receiveStock/list-receiveStock", (req, res, next) => {
   try {
     dbConnection.query(
-      "SELECT * FROM StockReceiveDetails",
+      "SELECT * , ReceivedQuantity * UnitPrice AS TotalCost FROM StockReceiveDetails",
       (_error, result, fields) => {
         if (_error) console.error(_error);
 
