@@ -6,11 +6,13 @@ let dbConnection = require("./../../util/db-helper/db_connection");
 router.post("/api/order/add-orderdet", (req, res, next) => {
   try {
     let OrderDetails = req.body.OrderDetails;
+    let cartDetail = req.body.cartDetail;
+
 
     let sqlQuery = `call USP_AddOrder(?)`;
     dbConnection.query(
       sqlQuery,
-      [OrderDetails],
+      [OrderDetails/*, cartDetail*/],
       (_error, result, fields) => {
         if (_error) console.error(_error);
 
@@ -22,17 +24,19 @@ router.post("/api/order/add-orderdet", (req, res, next) => {
     console.error(error);
   }
 });
-/*
-//update order
-router.put("/api/order/update-cart", (req, res, next) => {
-  try {
-    let EmpID = req.body.EmployeeID;
-    let BasicInfo = req.body.BasicInfo;
 
-    let sqlQuery = `call USP_UpdateCart(?,?,?,?,?)`;
+//update order
+router.put("/api/order/update-orders", (req, res, next) => {
+  try {
+    let OrderID = req.body.OrderID;
+    let OrderDetails = req.body.OrderDetails;
+    let cartDetail = req.body.cartDetail;
+
+
+    let sqlQuery = `call USP_UpdateOrder(?,?,?)`;
     dbConnection.query(
       sqlQuery,
-      [EmpID, BasicInfo],
+      [OrderID, OrderDetails, cartDetail],
       (_error, result, fields) => {
         if (_error) console.error(_error);
 
@@ -43,13 +47,13 @@ router.put("/api/order/update-cart", (req, res, next) => {
   } catch (error) {
     console.error(error);
   }
-}); */
+}); 
 
 //list order
 router.get("/api/order/list-orders", (req, res, next) => {
   try {
     dbConnection.query(
-      "SELECT * FROM Order",
+      "SELECT * FROM Orders",
       (_error, result, fields) => {
         if (_error) console.error(_error);
 
@@ -63,10 +67,10 @@ router.get("/api/order/list-orders", (req, res, next) => {
 });
 
 //get order by id
-router.get("/api/order/get-cart", (req, res, next) => {
+router.get("/api/order/get-order", (req, res, next) => {
   try {
     console.log(req.query);
-    let id = req.query.EmpID;
+    let id = req.query.orderingID;
     dbConnection.query(
       `call USP_GetOrders(${id})`,
       (_error, result, fields) => {
