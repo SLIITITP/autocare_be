@@ -7,7 +7,7 @@ router.get("/api/user/getuser", function (req, res, next) {
   dbConnection.query("select * from SystemUsers", (_error, result, fields) => {
     if (_error) {
       console.error(_error);
-      res.serverError();
+      res.sendStatus(500);
     }
     res.json(result);
   });
@@ -29,7 +29,7 @@ router.get("/api/user/authenticate", function (req, res, next) {
       (_error, result, fields) => {
         if (_error) {
           console.error(_error);
-          res.serverError();
+          res.sendStatus(500);
         }
 
         console.log(result);
