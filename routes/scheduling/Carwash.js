@@ -2,17 +2,16 @@ let express = require("express");
 let router = express.Router();
 let dbConnection = require("./../../util/db-helper/db_connection");
 
-//Add order
-router.post("/api/order/add-orderdet", (req, res, next) => {
+//Add an employee
+router.post("/api/customer/add-carwash-appointment", (req, res, next) => {
   try {
-    let OrderDetails = req.body.OrderDetails;
-    let cartDetail = req.body.cartDetail;
+    let AppointmentInfo = req.body.AppointmentInfo;
+    
 
-
-    let sqlQuery = `call USP_AddOrder(?)`;
+    let sqlQuery = `call USP_AddAppointment(?)`;
     dbConnection.query(
       sqlQuery,
-      [OrderDetails/*, cartDetail*/],
+      [AppointmentInfo],
       (_error, result, fields) => {
         if (_error) console.error(_error);
 
@@ -25,35 +24,17 @@ router.post("/api/order/add-orderdet", (req, res, next) => {
   }
 });
 
-//update order
-router.put("/api/order/update-orders", (req, res, next) => {
+//update an employee
+router.put("/api/customer/update-carwash-appointment", (req, res, next) => {
   try {
-    let OrderID = req.body.OrderID;
-    let OrderDetails = req.body.OrderDetails;
-    let cartDetail = req.body.cartDetail;
+    let ID = req.body.ID;
+    let AppointmentInfo = req.body.AppointmentInfo;
+    
 
-
-    let sqlQuery = `call USP_UpdateOrder(?,?,?)`;
+    let sqlQuery = `call USP_UpdateAppointment(?,?)`;
     dbConnection.query(
       sqlQuery,
-      [OrderID, OrderDetails, cartDetail],
-      (_error, result, fields) => {
-        if (_error) console.error(_error);
-
-        console.log(result);
-        res.json(result);
-      }
-    );
-  } catch (error) {
-    console.error(error);
-  }
-}); 
-
-//list order
-router.get("/api/order/list-orders", (req, res, next) => {
-  try {
-    dbConnection.query(
-      "SELECT * FROM Orders",
+      [ID, AppointmentInfo],
       (_error, result, fields) => {
         if (_error) console.error(_error);
 
@@ -66,13 +47,30 @@ router.get("/api/order/list-orders", (req, res, next) => {
   }
 });
 
-//get order by id
-router.get("/api/order/get-order", (req, res, next) => {
+//list employee
+router.get("/api/customer/list-carwash-appointment", (req, res, next) => {
+  try {
+    dbConnection.query(
+      "SELECT * FROM SchedulingAppointment",
+      (_error, result, fields) => {
+        if (_error) console.error(_error);
+
+        console.log(result);
+        res.json(result);
+      }
+    );
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+//get employee by id
+router.get("/api/customer/get-carwash-appointment", (req, res, next) => {
   try {
     console.log(req.query);
-    let id = req.query.orderingID;
+    let id = req.query.carwashID;
     dbConnection.query(
-      `call USP_GetOrders(${id})`,
+      `call USP_GetAppointInfo(${id})`,
       (_error, result, fields) => {
         if (_error) console.error(_error);
 
@@ -84,6 +82,5 @@ router.get("/api/order/get-order", (req, res, next) => {
     console.error(error);
   }
 });
-
 
 module.exports = router;

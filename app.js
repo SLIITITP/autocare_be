@@ -40,7 +40,7 @@ let schedulingAppointment = require("./routes/scheduling/Scheduling_appointment"
 let confirmAppointment = require("./routes/scheduling/Confirm_appointment");
 let ServiceManagerLogin = require("./routes/scheduling/Login");
 let VehicleServiceAppointment = require("./routes/scheduling/Service");
-
+let carwashAppointment = require("./routes/scheduling/carwash");
 //ticket
 let RaiseTicket = require("./routes/customer_care/raiseTicket");
 let TrackTicket = require("./routes/customer_care/trackTicket");
@@ -94,6 +94,7 @@ app.use("/",schedulingAppointment);
 app.use("/",confirmAppointment);
 app.use("/",ServiceManagerLogin);
 app.use("/",VehicleServiceAppointment);
+app.use("/",carwashAppointment);
 
 // customer_care
 app.use("/",RaiseTicket);

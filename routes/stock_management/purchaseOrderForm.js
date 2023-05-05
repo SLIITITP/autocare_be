@@ -24,7 +24,7 @@ router.post("/api/stockOrder/add-stockOrder", (req, res, next) => {
   }
 });
 
-//update an employee
+//update an order details
 router.put("/api/stockOrder/update-stockOrder", (req, res, next) => {
   try {
     let OrderID = req.body.OrderID;
@@ -50,7 +50,7 @@ router.put("/api/stockOrder/update-stockOrder", (req, res, next) => {
 router.get("/api/stockOrder/list-stockOrder", (req, res, next) => {
   try {
     dbConnection.query(
-      "SELECT * FROM StockPurchaseOrder",
+      "SELECT *,Quantity * UnitPrice AS TotalAmount FROM StockPurchaseOrder",
       (_error, result, fields) => {
         if (_error) console.error(_error);
 

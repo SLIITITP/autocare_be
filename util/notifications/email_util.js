@@ -12,14 +12,16 @@ let transporter = nodemailer.createTransport({
 });
 
 async function SendEmail(emailObject) {
-  let info = await transporter.sendMail({
-    from: "AutoCare Pvt Ltd",
-    to: emailObject.receiverEmail,
-    subject: emailObject.emailSubject,
-    text: emailObject.emailTextBody,
-    html: emailObject.emailHtmlBody,
-  });
-  console.log("Message sent: %s", info.messageId);
+  if (emailObject) {
+    let info = await transporter.sendMail({
+      from: "AutoCare Pvt Ltd",
+      to: emailObject.receiverEmail,
+      subject: emailObject.emailSubject,
+      text: emailObject.emailTextBody,
+      html: emailObject.emailHtmlBody,
+    });
+    console.log("Message sent: %s", info.messageId);
+  }
 }
 
 SendEmail().catch(console.error);
