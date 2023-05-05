@@ -25,7 +25,7 @@ router.post("/api/employee/leave-request-form", (req, res, next) => {
 router.get("/api/employee/leave-approval", (req, res, next) => {
   try {
     dbConnection.query(
-      "SELECT AutoID, EmployeeID, FirstName, LastName, Position, LeaveCategory, LeaveType, DATE_FORMAT(LeaveFrom, '%m/%d/%Y') AS LeaveFrom, DATE_FORMAT(LeaveTo, '%m/%d/%Y') AS LeaveTo, DATEDIFF(LeaveTo, LeaveFrom) AS DayCount, Status FROM EmployeeLeaveRequest;",
+      "SELECT AutoID, EmployeeID, FirstName, LastName,  Email, Position, LeaveCategory, LeaveType, DATE_FORMAT(LeaveFrom, '%m/%d/%Y') AS LeaveFrom, DATE_FORMAT(LeaveTo, '%m/%d/%Y') AS LeaveTo, DATEDIFF(LeaveTo, LeaveFrom) AS DayCount, Status FROM EmployeeLeaveRequest;",
       (_error, result, fields) => {
         if (_error) console.error(_error);
         res.json(result);
@@ -44,15 +44,16 @@ router.put("/api/employee/leave-request-approval", (req, res, next) => {
     let _daycountVal = req.body.DayCount;
     let _receiverEmail = req.body.EmployeeEmail;
     let apporvalStatus = "";
+    let _leaveCategory = req.body.LeaveCategory
 
     if (_statusValue == 0) apporvalStatus = "is still pending";
     else if (_statusValue == 1) apporvalStatus = "has been accepted";
-    else if (_statusValue == 2) apporvalStatus = "hasbeen rejected";
+    else if (_statusValue == 2) apporvalStatus = "has been rejected";
 
     let sqlQuery = `call USP_UpdateLeaveRequest(?,?,?)`;
     dbConnection.query(
       sqlQuery,
-      [_employeeID, _statusValue, _daycountVal],
+      [_employeeID, _statusValue, _daycountVal, _leaveCategory],
       (_error, result, fields) => {
         if (_error) {
           console.error(_error);
