@@ -13,8 +13,6 @@ let deliveryRequest = require("./routes/courier/deliveryRequest");
 let CourierRegistration = require("./routes/courier/CourierRegistration");
 let VehicleReg = require("./routes/courier/VehicleReg");
 
-
-
 //masters
 let productCategoryRouter = require("./routes/masters/product-category");
 
@@ -22,6 +20,7 @@ let productCategoryRouter = require("./routes/masters/product-category");
 let employeeMaster = require("./routes/payroll_hr/employeeMaster");
 let employeeLeaveRequest = require("./routes/payroll_hr/employeeLeave");
 let employeeAttendance = require("./routes/payroll_hr/employeeAttendance");
+let employeePayroll = require("./routes/payroll_hr/employeePayroll");
 
 //stock_management
 let StockReturnForm = require("./routes/stock_management/StockReturnForm");
@@ -34,13 +33,13 @@ let orderForm = require("./routes/order/orders");
 let cartItems = require("./routes/order/cart");
 let returnProd = require("./routes/order/return");
 
-
 //appointment_scheduling
 let schedulingAppointment = require("./routes/scheduling/Scheduling_appointment");
 let confirmAppointment = require("./routes/scheduling/Confirm_appointment");
 let ServiceManagerLogin = require("./routes/scheduling/Login");
 let VehicleServiceAppointment = require("./routes/scheduling/Service");
 let carwashAppointment = require("./routes/scheduling/carwash");
+
 //ticket
 let RaiseTicket = require("./routes/customer_care/raiseTicket");
 let TrackTicket = require("./routes/customer_care/trackTicket");
@@ -76,6 +75,7 @@ app.use("/", productCategoryRouter);
 app.use("/", employeeMaster);
 app.use("/", employeeLeaveRequest);
 app.use("/", employeeAttendance);
+app.use("/", employeePayroll);
 
 //stock_management
 app.use("/", StockReturnForm);
@@ -88,18 +88,17 @@ app.use("/", orderForm);
 app.use("/", cartItems);
 app.use("/", returnProd);
 
-
 //scheduling_appointment
-app.use("/",schedulingAppointment);
-app.use("/",confirmAppointment);
-app.use("/",ServiceManagerLogin);
-app.use("/",VehicleServiceAppointment);
-app.use("/",carwashAppointment);
+app.use("/", schedulingAppointment);
+app.use("/", confirmAppointment);
+app.use("/", ServiceManagerLogin);
+app.use("/", VehicleServiceAppointment);
+app.use("/", carwashAppointment);
 
 // customer_care
-app.use("/",RaiseTicket);
-app.use("/",TrackTicket);
-app.use("/",MyTicket);
+app.use("/", RaiseTicket);
+app.use("/", TrackTicket);
+app.use("/", MyTicket);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -9,7 +9,10 @@ router.post("/api/employee/mark-attendance", (req, res, next) => {
 
     let sqlQuery = `call USP_MarkAttendance(?)`;
     dbConnection.query(sqlQuery, [EmpAttendance], (_error, result, fields) => {
-      if (_error) throw _error;
+      if (_error) {
+        console.error(_error);
+        res.sendStatus(500);
+      }
 
       console.log(result);
       res.json(result);
@@ -23,11 +26,14 @@ router.post("/api/employee/mark-attendance", (req, res, next) => {
 router.get("/api/employee/list-attendance", (req, res, next) => {
   try {
     dbConnection.query(
-      `SELECT    AutoID, EmployeeID,    DATE_FORMAT(Date, '%m/%d/%Y') AS Date,    TimeIn,    TimeOut,
+      `SELECT    AutoID, EmployeeID,    DATE_FORMAT(RecordDate, '%m/%d/%Y') AS Date,    TimeIn,    TimeOut,
         TIMEDIFF(TimeOut, TimeIn) AS 'WorkingHours'
     FROM    EmployeeAttendance`,
       (_error, result, fields) => {
-        if (_error) console.error(_error);
+        if (_error) {
+          console.error(_error);
+          res.sendStatus(500);
+        }
 
         console.log(result);
         res.json(result);
