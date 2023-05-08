@@ -49,6 +49,27 @@ router.put("/api/order/update-orders", (req, res, next) => {
   }
 }); 
 
+//Update 2
+//endpoint for updating order data by admin
+
+router.put('/api/order/:id', (req, res) => { 
+
+  try { 
+
+    const orderData = req.body; 
+    const sqlQuery = 'UPDATE Orders SET PayStatus = ? WHERE OrderID = ?'; 
+
+    dbConnection.query(sqlQuery, [orderData.PayStatus, req.params.id], (error, result) => { 
+      if (error) throw error; 
+      console.log(result); 
+      res.json(result); 
+    }); 
+  } catch (error) { 
+    console.error(error); 
+  } 
+
+}); 
+
 //list order
 router.get("/api/order/list-orders", (req, res, next) => {
   try {
@@ -80,6 +101,22 @@ router.get("/api/order/get-order", (req, res, next) => {
         res.json(result);
       }
     );
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+
+//endpoint for deleting data
+router.delete('/api/order/:id', (req, res) => {
+  try {
+    const sqlQuery = 'DELETE FROM Orders WHERE OrderID = ?';
+
+    dbConnection.query(sqlQuery, [req.params.id], (error, result) => {
+      if (error) throw error;
+      console.log(result);
+      res.json(result);
+    });
   } catch (error) {
     console.error(error);
   }
