@@ -5,7 +5,10 @@ let dbConnection = require("./../../util/db-helper/db_connection");
 /* GET users listing. */
 router.get("/api/user/getuser", function (req, res, next) {
   dbConnection.query("select * from SystemUsers", (_error, result, fields) => {
-    if (_error) throw _error;
+    if (_error) {
+      console.error(_error);
+      res.sendStatus(500);
+    }
     res.json(result);
   });
 });
@@ -24,7 +27,10 @@ router.get("/api/user/authenticate", function (req, res, next) {
       left join EmployeeBasicInfo E on S.EmployeeID = E.AutoID
       where S.UserName = '${userName}' and S.Password = '${password}'`,
       (_error, result, fields) => {
-        if (_error) throw _error;
+        if (_error) {
+          console.error(_error);
+          res.sendStatus(500);
+        }
 
         console.log(result);
         res.json(result);

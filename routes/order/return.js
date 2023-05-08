@@ -81,4 +81,20 @@ router.get("/api/order/get-return-prod", (req, res, next) => {
   }
 });
 
+
+//endpoint for deleting data
+router.delete('/api/return/:id', (req, res) => {
+  try {
+    const sqlQuery = 'DELETE FROM Return_Product WHERE ReturnProdID = ?';
+
+    dbConnection.query(sqlQuery, [req.params.id], (error, result) => {
+      if (error) throw error;
+      console.log(result);
+      res.json(result);
+    });
+  } catch (error) {
+    console.error(error);
+  }
+});
+
 module.exports = router;
