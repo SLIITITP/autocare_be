@@ -1,27 +1,39 @@
 let express = require("express");
 let router = express.Router();
-let dbConnection = require("../../util/db-helper/db_connection");
+let dbConnection = require("./../../util/db-helper/db_connection");
+//list employee
+router.get("/api/customer/list-memo", (req, res, next) => {
+  try {
+    dbConnection.query(
+      "SELECT * FROM SchedulingAppointment WHERE email=${email}",
+      (_error, result, fields) => {
+        if (_error) console.error(_error);
 
-router.get("/api/customer/delete-appointment", (req, res, next) => {
-   
-    try {
-        let BasicInfo = req.body.BasicInfo;
-
-        let sqlQuery = `call USP_DeleteAppointmentInfo(${demail})`;
-        dbConnection.query(
-          sqlQuery,
-          [DeleteAppointmentInfo],
-          (_error, result, fields) => {
-            if (_error) console.error(_error);
-    
-            console.log(result);
-            res.json(result);
-          }
-        );
-      } catch (error) {
-        console.error(error);
+        console.log(result);
+        res.json(result);
       }
+    );
+  } catch (error) {
+    console.error(error);
+  }
+});
 
-  });
+//get employee by id
+router.get("/api/customer/get-memo", (req, res, next) => {
+  try {
+    console.log(req.query);
+    let id = req.query.carwashID;
+    dbConnection.query(
+      `call USP_GetMemoInfo(${email})`,
+      (_error, result, fields) => {
+        if (_error) console.error(_error);
 
+        console.log(result);
+        res.json(result);
+      }
+    );
+  } catch (error) {
+    console.error(error);
+  }
+});
 module.exports = router;
