@@ -1,18 +1,8 @@
 let express = require("express");
 let router = express.Router();
 let dbConnection = require("./../../util/db-helper/db_connection");
-let nodemailer = require('nodemailer');
-
-// configure the nodemailer transporter
-const transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
-  port: 3000,
-  secure: true,
-  auth: {
-    user: 'shanolisilva2001@gmail.com',
-    pass: 'nirangasilva'
-  }
-});
+let SendEmail = require("./../../util/notifications/email_util");
+const nodemailer = require("nodemailer");
 
 /*Add an return stock details*/
 router.post("/api/returnStock/add-returnStock",(req,res,next) =>{
@@ -28,21 +18,41 @@ router.post("/api/returnStock/add-returnStock",(req,res,next) =>{
 
                 console.log(result);
 
-                 // send email notification
-      let mailOptions = {
-        from: 'shanolisilva2001@gmail.com',
-        to: 'shohanisilva1996@gmail.com',
-        subject: 'New Return Stock Form Submitted',
-        text: 'A new Return Stock form has been submitted.'
-      };
+//sending email
+try {
+  let _stockReturnID = req.body.StockReturnID;
+  let _receiverEmail = req.body.Email;
+  // retrieve email from database
+  let emailQuery = `SELECT Email FROM StockReturnDetails WHERE StockReturnID = ?`;
+  dbConnection.query(
+    emailQuery,
+    [_stockReturnID],
+    (error, emailResult, fields) => {
+      if (error) {
+        console.error(error);
+        return;
+      }
 
-      transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-          console.error(error);
-        } else {
-          console.log('Email notification sent: ' + info.response);
-        }
-      });
+      console.log(emailResult);
+
+      //set & pass necessary info as like line 161 and pass it to the function line 169
+      let emailObject = {
+        
+        receiverEmail:'carmart0012@gmail.com',
+        emailSubject: "Return Stock Request for ID ${StockReturnID}",
+        emailTextBody: "Requesting to Return Stock for ID ${StockReturnID}",
+        emailHtmlBody: `<h1>Return Stock Request</h1>
+        <p>Dear Supplier, <br><br> we are requesting to return the stock which contains ${ReturnDetails}.
+          <br><br>Thanks & Regards,<br><b>AutoCare Inventory Management Team</b></p>`,
+      };
+      SendEmail(emailObject);
+    }
+  );
+} catch (error) {
+  console.error(error);
+}
+
+
                 res.json(result);
             }
         );
