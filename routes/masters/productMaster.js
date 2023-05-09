@@ -39,6 +39,20 @@ router.get("/api/product/list-product", (req, res, next) => {
   }
 });
 
+//get products
+router.get("/api/product/get-all-products", (req, res, next) => {
+  try {
+    dbConnection.query("SELECT ProdID, ProdName, Price, OnHandQty, Description, ImageFileName FROM Product", (_error, result, fields) => {
+      if (_error) console.error(_error);
+
+      console.log(result);
+      res.json(result);
+    });
+  } catch (error) {
+    console.error(error);
+  }
+});
+
 //get product by id
 router.get("/api/product/get-product", (req, res, next) => {
   try {
