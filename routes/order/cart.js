@@ -41,6 +41,29 @@ router.put("/api/order/update-cart", (req, res, next) => {
   }
 });
 
+
+//Update 2
+//endpoint for updating card data
+
+router.put('/api/cart/:id', (req, res) => { 
+
+  try { 
+
+    const cartData = req.body; 
+    const sqlQuery = 'UPDATE Cart SET Quantity = ?, Total = ? WHERE CartID = ?'; 
+
+    dbConnection.query(sqlQuery, [cartData.Quantity, cartData.Total, req.params.id], (error, result) => { 
+      if (error) throw error; 
+      console.log(result); 
+      res.json(result); 
+    }); 
+  } catch (error) { 
+    console.error(error); 
+  } 
+
+}); 
+
+
 //list cart
 
 router.get("/api/order/list-cart", (req, res, next) => {
