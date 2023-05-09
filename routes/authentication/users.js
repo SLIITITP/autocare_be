@@ -21,10 +21,12 @@ router.get("/api/user/authenticate", function (req, res, next) {
 
     dbConnection.query(
       `select C.AutoID CusID, C.FirstName CusFirstName, C.LastName CusLastName, C.Email CusEmail,
-      E.AutoID EmpID, E.FName EmpFirstName, E.LName EmpLastName, E.Email EmpEmail, E.EPFNo 
+      E.AutoID EmpID, E.FName EmpFirstName, E.LName EmpLastName, E.Email EmpEmail, E.EPFNo,
+      SM.AutoID SysManID, SM.FName SysManFName, SM.LName SysManLName, SM.Email SysManEmail, SM.Mobile SysManMobile 
       from SystemUsers S
       left join Customer C on S.CustomerID = C.AutoID
       left join EmployeeBasicInfo E on S.EmployeeID = E.AutoID
+      left join SystemManager SM on SM.AutoID = S.SysManagerID
       where S.UserName = '${userName}' and S.Password = '${password}'`,
       (_error, result, fields) => {
         if (_error) {
