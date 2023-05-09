@@ -34,6 +34,7 @@ let orderForm = require("./routes/order/orders");
 let cartItems = require("./routes/order/cart");
 let returnProd = require("./routes/order/return");
 let cardPay = require("./routes/order/payment");
+let invoice = require("./routes/order/invoice");
 
 //appointment_scheduling
 let schedulingAppointment = require("./routes/scheduling/Scheduling_appointment");
@@ -92,6 +93,7 @@ app.use("/", orderForm);
 app.use("/", cartItems);
 app.use("/", returnProd);
 app.use("/", cardPay);
+app.use("/", invoice);
 
 //scheduling_appointment
 app.use("/", schedulingAppointment);
