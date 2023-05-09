@@ -82,5 +82,35 @@ router.put('/api/cancel-sercive-station/:id', (req, res) => {
   });
   
 
+    //date
+    router.get('/api/date-sercive-station', (req, res) => {
+      try {
+        const sqlQuery = 'SELECT date FROM db_vehicle_service.VehicleServiceAppointment';
+    
+        dbConnection.query(sqlQuery, (error, result) => {
+          if (error) throw error;
+          console.log(result);
+          res.json(result);
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    });
+
+    //date car wash
+    router.get('/api/date-carwash-station', (req, res) => {
+      try {
+        const sqlQuery = 'SELECT date FROM db_vehicle_service.SchedulingAppointment';
+    
+        dbConnection.query(sqlQuery, (error, result) => {
+          if (error) throw error;
+          console.log(result);
+          res.json(result);
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    });
+    
   
 module.exports = router;

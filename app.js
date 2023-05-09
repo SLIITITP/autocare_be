@@ -94,7 +94,7 @@ app.use("/", confirmAppointment);
 app.use("/", ServiceManagerLogin);
 app.use("/", VehicleServiceAppointment);
 app.use("/", carwashAppointment);
-app.use("/",serviceApointment);
+app.use("/",serviceApointment)
 // customer_care
 app.use("/", RaiseTicket);
 app.use("/", TrackTicket);
