@@ -80,4 +80,19 @@ router.get("/api/order/get-cart-info", (req, res, next) => {
   }
 });
 
+//endpoint for deleting data
+router.delete('/api/cart/:id', (req, res) => {
+  try {
+    const sqlQuery = 'DELETE FROM Cart WHERE CartID = ?';
+
+    dbConnection.query(sqlQuery, [req.params.id], (error, result) => {
+      if (error) throw error;
+      console.log(result);
+      res.json(result);
+    });
+  } catch (error) {
+    console.error(error);
+  }
+});
+
 module.exports = router;
