@@ -1,45 +1,10 @@
 let express = require("express");
 let router = express.Router();
 let dbConnection = require("./../../util/db-helper/db_connection");
-//list employee
-router.get("/api/customer/list-memo", (req, res, next) => {
+
+router.get('/api/get-memo-details', (req, res) => {
   try {
-    dbConnection.query(
-      "SELECT * FROM SchedulingAppointment WHERE email=${email}",
-      (_error, result, fields) => {
-        if (_error) console.error(_error);
-
-        console.log(result);
-        res.json(result);
-      }
-    );
-  } catch (error) {
-    console.error(error);
-  }
-});
-
-//get employee by id
-router.get("/api/customer/get-memo", (req, res, next) => {
-  try {
-    console.log(req.query);
-    let id = req.query.carwashID;
-    dbConnection.query(
-      `call USP_GetMemoInfo(${email})`,
-      (_error, result, fields) => {
-        if (_error) console.error(_error);
-
-        console.log(result);
-        res.json(result);
-      }
-    );
-  } catch (error) {
-    console.error(error);
-  }
-});
-
-router.get('/api/get-memo-details/:email', (req, res) => {
-  try {
-    const sqlQuery = 'SELECT * FROM VehicleServiceAppointment WHERE email = ?';
+    const sqlQuery = 'SELECT * FROM VehicleServiceAppointment';
 
     dbConnection.query(sqlQuery, [req.params.id], (error, result) => {
       if (error) throw error;
@@ -51,5 +16,32 @@ router.get('/api/get-memo-details/:email', (req, res) => {
   }
 });
 
+router.get('/api/memo-carwash-detail', (req, res) => {
+  try {
+    const sqlQuery = 'SELECT * FROM SchedulingAppointment';
+
+    dbConnection.query(sqlQuery, (error, result) => {
+      if (error) throw error;
+      console.log(result);
+      res.json(result);
+    });
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+router.get('/api/memo-sercive-details', (req, res) => {
+  try {
+    const sqlQuery = 'SELECT * FROM VehicleServiceAppointment';
+
+    dbConnection.query(sqlQuery, (error, result) => {
+      if (error) throw error;
+      console.log(result);
+      res.json(result);
+    });
+  } catch (error) {
+    console.error(error);
+  }
+});
 
 module.exports = router;
