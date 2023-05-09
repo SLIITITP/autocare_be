@@ -1,6 +1,8 @@
 let express = require("express");
 let router = express.Router();
 let dbConnection = require("./../../util/db-helper/db_connection");
+let SendEmail = require("./../../util/notifications/email_util");
+const nodemailer = require("nodemailer");
 
 /*Add Stock Orders*/
 router.post("/api/stockOrder/add-stockOrder", (req, res, next) => {
@@ -16,6 +18,42 @@ router.post("/api/stockOrder/add-stockOrder", (req, res, next) => {
         if (_error) throw _error;
 
         console.log(result);
+
+        //sending email
+try {
+  let _stockOrderID = req.body.OrderID;
+  let _receiverEmail = req.body.Supplier;
+  // retrieve email from database
+  let emailQuery = `SELECT Supplier FROM StockPurchaseOrder WHERE OrderID = ?`;
+  dbConnection.query(
+    emailQuery,
+    [_stockOrderID],
+    (error, emailResult, fields) => {
+      if (error) {
+        console.error(error);
+        return;
+      }
+
+      console.log(emailResult);
+
+      //set & pass necessary info as like line 161 and pass it to the function line 169
+      let emailObject = {
+        
+        receiverEmail:'carmart0012@gmail.com',
+        emailSubject: "Order Stock Request for ID ${OrderID}",
+        emailTextBody: "Requesting place an stock order request for ID ${OrderID}.",
+        emailHtmlBody: `<h1>Order Stock</h1>
+        <p>Dear Supplier, <br><br>We are requesting to place a stock order for ID ${PurchaseOrderInfo}.
+          <br><br>Thanks & Regards,<br><b>AutoCare Inventory Management Team</b></p>`,
+      };
+      SendEmail(emailObject);
+    }
+  );
+} catch (error) {
+  console.error(error);
+}
+
+
         res.json(result);
       }
     );

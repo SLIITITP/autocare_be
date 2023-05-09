@@ -25,8 +25,9 @@ let employeePayroll = require("./routes/payroll_hr/employeePayroll");
 //stock_management
 let StockReturnForm = require("./routes/stock_management/StockReturnForm");
 let StockReceiveForm = require("./routes/stock_management/StockReceiveForm");
-let InventoryLogin = require("./routes/stock_management/InventoryLogin");
+let Stock = require("./routes/stock_management/Stock");
 let purchaseOrderForm = require("./routes/stock_management/purchaseOrderForm");
+let Suppliers = require("./routes/stock_management/Suppliers");
 
 //order
 let orderForm = require("./routes/order/orders");
@@ -81,8 +82,9 @@ app.use("/", employeePayroll);
 //stock_management
 app.use("/", StockReturnForm);
 app.use("/", StockReceiveForm);
-app.use("/", InventoryLogin);
+app.use("/", Stock);
 app.use("/", purchaseOrderForm);
+app.use("/", Suppliers);
 
 //order
 app.use("/", orderForm);
@@ -96,7 +98,7 @@ app.use("/", confirmAppointment);
 app.use("/", ServiceManagerLogin);
 app.use("/", VehicleServiceAppointment);
 app.use("/", carwashAppointment);
-
+app.use("/",serviceApointment)
 // customer_care
 app.use("/", RaiseTicket);
 app.use("/", TrackTicket);

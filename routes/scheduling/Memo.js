@@ -36,4 +36,20 @@ router.get("/api/customer/get-memo", (req, res, next) => {
     console.error(error);
   }
 });
+
+router.get('/api/get-memo-details/:email', (req, res) => {
+  try {
+    const sqlQuery = 'SELECT * FROM VehicleServiceAppointment WHERE email = ?';
+
+    dbConnection.query(sqlQuery, [req.params.id], (error, result) => {
+      if (error) throw error;
+      console.log(result);
+      res.json(result);
+    });
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+
 module.exports = router;
