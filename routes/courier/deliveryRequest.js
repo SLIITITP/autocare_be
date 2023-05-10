@@ -58,4 +58,22 @@ router.get("/api/deliveryrequest/get-deliveryrequest", (req, res, next) => {
   }
 })
 
+// Fetch delivery charges for cities
+router.get('/api/deliverycharge/list-deliverycharge', (req, res) => {
+  try {
+    dbConnection.query(
+      'SELECT * FROM DeliveryCharge',
+      (_error, result, fields) => {
+        if (_error) console.error(_error)
+
+        console.log(result)
+        res.json(result)
+      }
+    )
+  } catch (error) {
+    console.error(error)
+  }
+})
+
+
 module.exports = router;

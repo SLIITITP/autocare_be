@@ -2,7 +2,7 @@ let express = require("express");
 let router = express.Router();
 let dbConnection = require("./../../util/db-helper/db_connection");
 
-//update an request
+//update an courier
 router.put("/api/courier/update-courier", (req, res, next) => {
     try {
         let CourierDetails = req.body.CourierDetails
