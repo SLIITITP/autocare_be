@@ -1,0 +1,53 @@
+CREATE DEFINER=`admin`@`%` PROCEDURE `USP_AddEmployee`(
+	IN BasicInfo json,
+    IN JobInfo json,   
+    IN LeaveInfo json,
+     IN PayrollInfo json
+)
+BEGIN
+	INSERT INTO `EmployeeBasicInfo`
+			(`EPFNo`,`FName`,`LName`,`DateOfBirth`,`MobileNo`,`Email`)
+	VALUES 	(
+				JSON_UNQUOTE(JSON_EXTRACT(BasicInfo, '$.EPFNo')),
+				JSON_UNQUOTE(JSON_EXTRACT(BasicInfo, '$.FName')),
+				JSON_UNQUOTE(JSON_EXTRACT(BasicInfo, '$.LName')),
+				JSON_UNQUOTE(JSON_EXTRACT(BasicInfo, '$.DateOfBirth')),
+				JSON_UNQUOTE(JSON_EXTRACT(BasicInfo, '$.MobileNo')),
+				JSON_UNQUOTE(JSON_EXTRACT(BasicInfo, '$.Email'))
+            );
+	
+    SET @EmpID = LAST_INSERT_ID();
+    
+	INSERT INTO `EmployeeJobInfo`
+			(`EmployeeID`,`JoinedDate`,`ResignedDate`)
+	VALUES (
+				@EmpID,
+				JSON_UNQUOTE(JSON_EXTRACT(JobInfo, '$.JoinedDate')),
+				JSON_UNQUOTE(JSON_EXTRACT(JobInfo, '$.ResignedDate'))
+    );
+    
+    INSERT INTO `EmployeePayrollInfo`
+	(
+		`EmployeeID`,
+		`BasicSalary`,
+		`OTRate`,
+		`FuelAllowance`,
+		`LCAllowance`)
+	VALUES
+	(
+		@EmpID,
+        JSON_UNQUOTE(JSON_EXTRACT(PayrollInfo, '$.BasicSalary')),
+        JSON_UNQUOTE(JSON_EXTRACT(PayrollInfo, '$.OTRate')),
+        JSON_UNQUOTE(JSON_EXTRACT(PayrollInfo, '$.FuelAllowance')),
+        JSON_UNQUOTE(JSON_EXTRACT(PayrollInfo, '$.LCAllowance'))
+    );
+
+    
+    INSERT INTO `EmployeeLeaveInfo`
+			(`EmployeeID`,`AnnualCount`,`CasualCount`)
+		VALUES (
+				@EmpID,
+				JSON_UNQUOTE(JSON_EXTRACT(LeaveInfo, '$.AnnualCount')),
+				JSON_UNQUOTE(JSON_EXTRACT(LeaveInfo, '$.CasualCount'))
+        );
+END

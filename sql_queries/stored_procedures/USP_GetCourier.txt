@@ -1,0 +1,8 @@
+CREATE DEFINER=`admin`@`%` PROCEDURE `USP_GetCourier`(
+IN CourierID int
+)
+BEGIN
+
+    select * from CourierReg where CourierRegID = CourierID limit 1;
+ 
+END

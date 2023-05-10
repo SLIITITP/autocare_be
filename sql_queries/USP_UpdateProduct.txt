@@ -1,0 +1,40 @@
+CREATE PROCEDURE `USP_UpdateProduct`(
+	IN ProdID int,
+    IN ProdBasicInfo json,
+    IN ProdSubCatInfo json,   
+    IN ProdCatInfo json
+)
+BEGIN
+	/*update Product data*/
+	UPDATE `Product`
+	SET
+			`ProdName` 	= JSON_UNQUOTE(JSON_EXTRACT(ProdBasicInfo, '$.ProdName')),
+			`Brand` 	= JSON_UNQUOTE(JSON_EXTRACT(ProdBasicInfo, '$.Brand')),
+			`Price` 	= JSON_UNQUOTE(JSON_EXTRACT(ProdBasicInfo, '$.Price')),
+			`OnHandQty` = JSON_UNQUOTE(JSON_EXTRACT(ProdBasicInfo, '$.OnHandQty')),
+			`Rating` 	= JSON_UNQUOTE(JSON_EXTRACT(ProdBasicInfo, '$.Rating')),
+			`CreatedDate` 	= JSON_UNQUOTE(JSON_EXTRACT(ProdBasicInfo, '$.CreatedDate')),
+            `UpdatedDate` = JSON_UNQUOTE(JSON_EXTRACT(ProdBasicInfo, '$.UpdatedDate')),
+			`Description` 	= JSON_UNQUOTE(JSON_EXTRACT(ProdBasicInfo, '$.Description')),
+			`ImageFileName` 	= JSON_UNQUOTE(JSON_EXTRACT(ProdBasicInfo, '$.ImageFileName'))
+	WHERE 	`ProdID` 	= ProdID;
+
+	/*update Prod Category*/
+    UPDATE `ProductCategory`
+	SET
+			`Code` 	= JSON_UNQUOTE(JSON_EXTRACT(ProdCatInfo, '$.Code')),
+			`IsActive` 	= JSON_UNQUOTE(JSON_EXTRACT(ProdCatInfo, '$.IsActive')),
+            `CreatedDate` 	= JSON_UNQUOTE(JSON_EXTRACT(ProdCatInfo, '$.CreatedDate')),
+            `UpdatedDate` 	= JSON_UNQUOTE(JSON_EXTRACT(ProdCatInfo, '$.UpdatedDate'))
+	WHERE 	`AutoID` 	= AutoID;
+    
+    /*update ProdSub Category*/
+    UPDATE `ProductSubCategory`
+	SET
+			`ProdCategoryID` 	= JSON_UNQUOTE(JSON_EXTRACT(ProdSubCatInfo, '$.ProdCategoryID')),
+			`IsActive` 		= JSON_UNQUOTE(JSON_EXTRACT(ProdSubCatInfo, '$.IsActive')),
+			`UpdatedDate` = JSON_UNQUOTE(JSON_EXTRACT(ProdSubCatInfo, '$.UpdatedDate'))
+	WHERE `AutoID` 		= AutoID;
+
+
+END

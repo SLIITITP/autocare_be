@@ -1,0 +1,6 @@
+CREATE DEFINER=`admin`@`%` PROCEDURE `USP_GetPackages`(
+
+)
+BEGIN
+    select * from ServicePackage where AutoID = AutoID limit 1;  
+END

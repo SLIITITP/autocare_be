@@ -1,0 +1,18 @@
+CREATE DEFINER=`admin`@`%` PROCEDURE `USP_UpdateRequest`(IN  DeliveryID int, IN RequestDetails json)
+BEGIN
+	IF DeliveryID != 0 THEN
+		UPDATE DeliveryRequest set 
+			`OrderID` 	= JSON_UNQUOTE(JSON_EXTRACT(RequestDetails, '$.OrderID')),
+			`Name` 	= JSON_UNQUOTE(JSON_EXTRACT(RequestDetails, '$.Name')),
+			`Phone` 	= JSON_UNQUOTE(JSON_EXTRACT(RequestDetails, '$.Phone')),
+			`Address` = JSON_UNQUOTE(JSON_EXTRACT(RequestDetails, '$.Address')),
+			`City` 	= JSON_UNQUOTE(JSON_EXTRACT(RequestDetails, '$.City')),
+			`Province` 	= JSON_UNQUOTE(JSON_EXTRACT(RequestDetails, '$.Province')),
+            `OrderedDate` 	= JSON_UNQUOTE(JSON_EXTRACT(RequestDetails, '$.OrderedDate')),
+			`DeliveryCharge` 	= JSON_UNQUOTE(JSON_EXTRACT(RequestDetails, '$.DeliveryCharge')),
+            `DeliveryStatus` 	= JSON_UNQUOTE(JSON_EXTRACT(RequestDetails, '$.DeliveryCharge'))
+          
+        WHERE  DeliveryID = DeliveryID;
+       
+    END IF;
+END
