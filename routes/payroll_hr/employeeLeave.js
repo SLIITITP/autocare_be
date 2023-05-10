@@ -39,6 +39,7 @@ router.get("/api/employee/leave-approval", (req, res, next) => {
 //approve or reject a leave
 router.put("/api/employee/leave-request-approval", (req, res, next) => {
   try {
+    let _recordID = req.body.RecordID;
     let _employeeID = req.body.EmployeeID;
     let _statusValue = req.body.Status;
     let _daycountVal = req.body.DayCount;
@@ -50,10 +51,10 @@ router.put("/api/employee/leave-request-approval", (req, res, next) => {
     else if (_statusValue == 1) apporvalStatus = "has been accepted";
     else if (_statusValue == 2) apporvalStatus = "has been rejected";
 
-    let sqlQuery = `call USP_UpdateLeaveRequest(?,?,?)`;
+    let sqlQuery = `call USP_UpdateLeaveRequest(?,?,?,?)`;
     dbConnection.query(
       sqlQuery,
-      [_employeeID, _statusValue, _daycountVal, _leaveCategory],
+      [_recordID, _employeeID, _statusValue, _daycountVal, _leaveCategory],
       (_error, result, fields) => {
         if (_error) {
           console.error(_error);
