@@ -1,0 +1,35 @@
+CREATE DEFINER=`admin`@`%` PROCEDURE `USP_AddProduct`(
+	IN ProdBasicInfo json,    
+    IN ProdCatInfo json 
+)
+BEGIN
+	INSERT INTO `Product`
+			(`ProdID`,`ProdCatID`,`ProdSubCatID`,`ProdName`,`Brand`,`Price`,`OnHandQty`,`Rating`,`CreatedDate`,`UpdatedDate`,`Description`,`ImageFileName`)
+	VALUES 	(
+				JSON_UNQUOTE(JSON_EXTRACT(ProdBasicInfo, '$.ProdID')),
+				JSON_UNQUOTE(JSON_EXTRACT(ProdBasicInfo, '$.ProdCatID')),
+				JSON_UNQUOTE(JSON_EXTRACT(ProdBasicInfo, '$.ProdSubCatID')),
+				JSON_UNQUOTE(JSON_EXTRACT(ProdBasicInfo, '$.ProdName')),
+				JSON_UNQUOTE(JSON_EXTRACT(ProdBasicInfo, '$.Brand')),
+				JSON_UNQUOTE(JSON_EXTRACT(ProdBasicInfo, '$.Price')),
+				JSON_UNQUOTE(JSON_EXTRACT(ProdBasicInfo, '$.OnHandQty')),
+				JSON_UNQUOTE(JSON_EXTRACT(ProdBasicInfo, '$.Rating')),
+				JSON_UNQUOTE(JSON_EXTRACT(ProdBasicInfo, '$.CreatedDate')),
+				JSON_UNQUOTE(JSON_EXTRACT(ProdBasicInfo, '$.UpdatedDate')),
+				JSON_UNQUOTE(JSON_EXTRACT(ProdBasicInfo, '$.Description')),
+				JSON_UNQUOTE(JSON_EXTRACT(ProdBasicInfo, '$.ImageFileName'))
+            );
+	
+    
+    INSERT INTO `ProductCategory`
+	(`AutoID`,`Code`,`IsActive`,`CreatedDate`,`UpdatedDate`)
+	VALUES
+	(
+		JSON_UNQUOTE(JSON_EXTRACT(ProdCatInfo, '$.Code')),
+		JSON_UNQUOTE(JSON_EXTRACT(ProdCatInfo, '$.IsActive')),
+		JSON_UNQUOTE(JSON_EXTRACT(ProdCatInfo, '$.CreatedDate')),
+		JSON_UNQUOTE(JSON_EXTRACT(ProdCatInfo, '$.UpdatedDate'))
+    );
+
+    
+END

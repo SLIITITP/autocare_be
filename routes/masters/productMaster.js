@@ -25,15 +25,42 @@ router.post("/api/product/add-product", (req, res, next) => {
   }
 });
 
+//update a product
+router.put("/api/product/update-product", (req, res, next) => {
+  try {
+    let ProdID = req.body.ProdID;
+    let ProdBasicInfo = req.body.ProdBasicInfo;
+    let ProdSubCatInfo = req.body.ProdSubCatInfo;
+    let ProdCatInfo = req.body.ProdCatInfo;
+
+    let sqlQuery = `call USP_UpdateProduct(?,?,?,?,?)`;
+    dbConnection.query(
+      sqlQuery,
+      [ProdID, ProdBasicInfo, ProdSubCatInfo, ProdCatInfo],
+      (_error, result, fields) => {
+        if (_error) console.error(_error);
+
+        console.log(result);
+        res.json(result);
+      }
+    );
+  } catch (error) {
+    console.error(error);
+  }
+});
+
 //list product
 router.get("/api/product/list-product", (req, res, next) => {
   try {
-    dbConnection.query("SELECT * FROM Product", (_error, result, fields) => {
+    dbConnection.query(
+      "SELECT * FROM Product", 
+      (_error, result, fields) => {
       if (_error) console.error(_error);
 
-      console.log(result);
-      res.json(result);
-    });
+        console.log(result);
+        res.json(result);
+      }
+    );
   } catch (error) {
     console.error(error);
   }
@@ -45,7 +72,7 @@ router.get("/api/product/get-product", (req, res, next) => {
     console.log(req.query);
     let id = req.query.ProdID;
     dbConnection.query(
-      `call USP_GetProductInfo(${id})`, //change -> make the procedure
+      `call USP_GetProductInfo(${id})`, 
       (_error, result, fields) => {
         if (_error) console.error(_error);
 

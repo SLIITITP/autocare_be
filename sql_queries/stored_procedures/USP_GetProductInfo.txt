@@ -1,0 +1,6 @@
+CREATE DEFINER=`admin`@`%` PROCEDURE `USP_GetProductInfo`(
+IN ProdID int
+)
+BEGIN
+    select * from Product where ProdID = ProdID limit 1;  
+END

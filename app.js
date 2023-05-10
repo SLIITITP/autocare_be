@@ -15,6 +15,8 @@ let VehicleReg = require("./routes/courier/VehicleReg");
 
 //masters
 let productCategoryRouter = require("./routes/masters/product-category");
+let productMaster = require("./routes/masters/productMaster");
+let ServiceMaster = require("./routes/masters/serviceMaster")
 
 //payroll_hr
 let employeeMaster = require("./routes/payroll_hr/employeeMaster");
@@ -72,6 +74,8 @@ app.use("/", VehicleReg);
 
 //masters
 app.use("/", productCategoryRouter);
+app.use("/", productMaster);
+app.use("/",ServiceMaster);
 
 //payroll_hr
 app.use("/", employeeMaster);
@@ -98,7 +102,7 @@ app.use("/", confirmAppointment);
 app.use("/", ServiceManagerLogin);
 app.use("/", VehicleServiceAppointment);
 app.use("/", carwashAppointment);
-app.use("/",serviceApointment)
+app.use("/", serviceApointment)
 // customer_care
 app.use("/", RaiseTicket);
 app.use("/", TrackTicket);
