@@ -36,6 +36,7 @@ let orderForm = require("./routes/order/orders");
 let cartItems = require("./routes/order/cart");
 let returnProd = require("./routes/order/return");
 let cardPay = require("./routes/order/payment");
+let invoice = require("./routes/order/invoice");
 
 //appointment_scheduling
 let schedulingAppointment = require("./routes/scheduling/Scheduling_appointment");
@@ -43,6 +44,8 @@ let confirmAppointment = require("./routes/scheduling/Confirm_appointment");
 let ServiceManagerLogin = require("./routes/scheduling/Login");
 let VehicleServiceAppointment = require("./routes/scheduling/Service");
 let carwashAppointment = require("./routes/scheduling/carwash");
+let memo = require("./routes/scheduling/Memo");
+let dateviewer=require("./routes/scheduling/Details");
 
 //ticket
 let RaiseTicket = require("./routes/customer_care/raiseTicket");
@@ -95,6 +98,7 @@ app.use("/", orderForm);
 app.use("/", cartItems);
 app.use("/", returnProd);
 app.use("/", cardPay);
+app.use("/", invoice);
 
 //scheduling_appointment
 app.use("/", schedulingAppointment);
@@ -103,6 +107,9 @@ app.use("/", ServiceManagerLogin);
 app.use("/", VehicleServiceAppointment);
 app.use("/", carwashAppointment);
 app.use("/", serviceApointment)
+app.use("/", memo);
+app.use("/", dateviewer);
+
 // customer_care
 app.use("/", RaiseTicket);
 app.use("/", TrackTicket);
