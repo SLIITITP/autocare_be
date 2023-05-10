@@ -3,9 +3,6 @@ let router = express.Router();
 let dbConnection = require("./../../util/db-helper/db_connection");
 
 /*Add an vehicle details*/
-router.post("/api/vehiclereg/add-vehiclereg",(req,res,next) =>{
-    try{
-        let VehicleDetails = req.body.VehicleDetails;
 
         let sqlQuery = `call USP_AddVehicle(?)`;
         dbConnection.query(
