@@ -6,7 +6,6 @@ let dbConnection = require("./../../util/db-helper/db_connection");
 router.post("/api/customer/add-carwash-appointment", (req, res, next) => {
   try {
     let AppointmentInfo = req.body.AppointmentInfo;
-    
 
     let sqlQuery = `call USP_AddAppointment(?)`;
     dbConnection.query(
@@ -29,7 +28,6 @@ router.put("/api/customer/update-carwash-appointment", (req, res, next) => {
   try {
     let ID = req.body.ID;
     let AppointmentInfo = req.body.AppointmentInfo;
-    
 
     let sqlQuery = `call USP_UpdateAppointment(?,?)`;
     dbConnection.query(
